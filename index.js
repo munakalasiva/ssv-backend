@@ -9,7 +9,7 @@ import galleryRoutes from "./routes/galleryRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
 import serviceRoutes from "./routes/serviceRoutes.js";
 import repairRoutes from "./routes/repairRoutes.js";
-
+import sitemapRouter from "./routes/sitemap.js";
 
 
 dotenv.config();
@@ -22,6 +22,8 @@ app.use(cors()); // <-- ENABLE CORS
 app.use(express.json());
 
 // Routes
+
+app.use("/", sitemapRouter);
 app.use("/api/contacts", contactRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/gallery", galleryRoutes);
