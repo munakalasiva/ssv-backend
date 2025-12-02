@@ -1,11 +1,48 @@
 import Blog from "../models/Blog.js";
 import cloudinary from "../config/cloudinary.js";
+import { purgePrerender } from "../utils/prerenderPurge.js";
+import { generateSlug } from "../utils/slug.js"; 
+
+// export const createBlog = async (req, res) => {
+//   try {
+//     let imageUrl = "";
+
+//     // Upload image to cloudinary if file present
+//     if (req.file) {
+//       const result = await cloudinary.uploader.upload(req.file.path, {
+//         folder: "blogs",
+//       });
+//       imageUrl = result.secure_url;
+//     }
+
+//     // Save blog data
+//     const blog = await Blog.create({
+//       title: req.body.title,
+//       category: req.body.category,
+//       date: req.body.date,
+//       excerpt: req.body.excerpt,
+//       content: req.body.content,
+//       keywords:req.body.keywords,
+//       image: imageUrl,
+//     });
+
+//     res.status(201).json({ success: true, data: blog });
+
+//   } catch (error) {
+//     console.error("Blog Upload Error:", error);
+//     res.status(500).json({ success: false, message: error.message });
+//   }
+// };
+
+
+
+// Get all blogs
 
 export const createBlog = async (req, res) => {
   try {
     let imageUrl = "";
 
-    // Upload image to cloudinary if file present
+    // Upload image if present
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "blogs",
@@ -13,19 +50,25 @@ export const createBlog = async (req, res) => {
       imageUrl = result.secure_url;
     }
 
-    // Save blog data
+    // Save blog
     const blog = await Blog.create({
       title: req.body.title,
       category: req.body.category,
       date: req.body.date,
       excerpt: req.body.excerpt,
       content: req.body.content,
-      keywords:req.body.keywords,
+      keywords: req.body.keywords,
       image: imageUrl,
     });
 
-    res.status(201).json({ success: true, data: blog });
+    // Generate slug (if using slug)
+    const slug = blog.slug || generateSlug(blog.title);
+    const blogURL = `https://ssvelectronicsvizag.com/blog/${slug}`;
 
+    // 🔥 Purge Prerender cache
+    purgePrerender(blogURL);
+
+    res.status(201).json({ success: true, data: blog });
   } catch (error) {
     console.error("Blog Upload Error:", error);
     res.status(500).json({ success: false, message: error.message });
@@ -33,8 +76,6 @@ export const createBlog = async (req, res) => {
 };
 
 
-
-// Get all blogs
 export const getBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ createdAt: -1 });
@@ -57,6 +98,37 @@ export const getBlogById = async (req, res) => {
 };
 
 // Update blog
+// export const updateBlog = async (req, res) => {
+//   try {
+//     let updateData = {
+//       title: req.body.title,
+//       category: req.body.category,
+//       date: req.body.date,
+//       excerpt: req.body.excerpt,
+//       content: req.body.content,
+//       keywords:req.body.keywords,
+//     };
+
+//     // If new image uploaded → upload to cloudinary
+//     if (req.file) {
+//       const result = await cloudinary.uploader.upload(req.file.path, {
+//         folder: "blogs",
+//       });
+//       updateData.image = result.secure_url;
+//     }
+
+//     // Update blog data
+//     const updated = await Blog.findByIdAndUpdate(req.params.id, updateData, {
+//       new: true,
+//     });
+
+//     res.json({ success: true, updated });
+//   } catch (error) {
+//     console.error("Update Blog Error:", error);
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 export const updateBlog = async (req, res) => {
   try {
     let updateData = {
@@ -65,10 +137,10 @@ export const updateBlog = async (req, res) => {
       date: req.body.date,
       excerpt: req.body.excerpt,
       content: req.body.content,
-      keywords:req.body.keywords,
+      keywords: req.body.keywords,
     };
 
-    // If new image uploaded → upload to cloudinary
+    // If new image uploaded
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "blogs",
@@ -76,10 +148,16 @@ export const updateBlog = async (req, res) => {
       updateData.image = result.secure_url;
     }
 
-    // Update blog data
     const updated = await Blog.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
     });
+
+    // Build URL for purge
+    const slug = updated.slug || generateSlug(updated.title);
+    const blogURL = `https://ssvelectronicsvizag.com/blog/${slug}`;
+
+    // 🔥 Purge cache
+    purgePrerender(blogURL);
 
     res.json({ success: true, updated });
   } catch (error) {
@@ -90,11 +168,30 @@ export const updateBlog = async (req, res) => {
 
 
 // Delete blog
+// export const deleteBlog = async (req, res) => {
+//   try {
+//     await Blog.findByIdAndDelete(req.params.id);
+//     res.json({ success: true, message: "Blog deleted successfully" });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 export const deleteBlog = async (req, res) => {
   try {
-    await Blog.findByIdAndDelete(req.params.id);
+    const blog = await Blog.findByIdAndDelete(req.params.id);
+
+    if (blog) {
+      const slug = blog.slug || generateSlug(blog.title);
+      const blogURL = `https://ssvelectronicsvizag.com/blog/${slug}`;
+
+      // Purge deleted blog cache so Google doesn’t index old version
+      purgePrerender(blogURL);
+    }
+
     res.json({ success: true, message: "Blog deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
