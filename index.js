@@ -16,23 +16,17 @@ import serviceRoutes from "./routes/serviceRoutes.js";
 import repairRoutes from "./routes/repairRoutes.js";
 import sitemapRouter from "./routes/sitemap.js";
 
-// ------------------------------
-// Load environment variables + DB
-// ------------------------------
+
 dotenv.config();
 connectDB();
 
 const app = express();
 
-// ------------------------------
-// Fix __dirname for ES Modules
-// ------------------------------
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// ------------------------------
-// Middleware
-// ------------------------------
+
 app.use(cors());
 app.use(express.json());
 
@@ -45,16 +39,11 @@ Sitemap:
 `);
 });
 
-// ------------------------------
-// Prerender.io
-// ------------------------------
 prerender.set("prerenderToken", process.env.PRERENDER_TOKEN);
 prerender.set("protocol", "https");
 app.use(prerender);
 
-// ------------------------------
-// API Routes
-// ------------------------------
+
 app.use("/", sitemapRouter);
 app.use("/api/contacts", contactRoutes);
 app.use("/api/bookings", bookingRoutes);
@@ -63,14 +52,11 @@ app.use("/api/blogs", blogRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/warranty", repairRoutes);
 
-// ------------------------------
-// Serve Public folder
-// ------------------------------
+
 app.use(express.static(path.join(__dirname, "public")));
 
-// ------------------------------
-// Start Server
-// ------------------------------
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`Server running on port ${PORT}`)
