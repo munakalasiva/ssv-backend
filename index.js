@@ -33,11 +33,10 @@ app.use(express.json());
 app.get("/robots.txt", (req, res) => {
   res.type("text/plain");
   res.send(`User-agent: *
-Disallow: /
-
-Sitemap:
+Allow: /
 `);
 });
+
 
 prerender.set("prerenderToken", process.env.PRERENDER_TOKEN);
 prerender.set("protocol", "https");
