@@ -94,9 +94,6 @@ app.use("/api/warranty", repairRoutes);
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get(/^(?!\/api).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
 
 
 
