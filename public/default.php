@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/ssv-logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="theme-color" content="#093f74" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="SSV Electronics" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/vite.svg" />
+
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1" />
+
+    <title>SSV Electronics - Professional TV Repair Services in Visakhapatnam</title>
+
+    <meta name="description" content="Expert TV repair services in Visakhapatnam. Professional repairs for Samsung, LG, Sony, Mi & all brands. Doorstep service with warranty. Call +91-9291488856" />
+
+    <meta name="keywords" content="TV repair Visakhapatnam, LED TV repair, Smart TV repair, TV service center, Samsung TV repair, LG TV repair, doorstep TV repair" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- 🔵 Meta Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s){
+        if(f.fbq)return;
+        n=f.fbq=function(){
+          n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)
+        };
+        if(!f._fbq)f._fbq=n;
+        n.push=n;
+        n.loaded=!0;
+        n.version='2.0';
+        n.queue=[];
+        t=b.createElement(e);
+        t.async=!0;
+        t.src=v;
+        s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)
+      }
+      (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      
+      fbq('init', '2472954843120090'); 
+      fbq('track', 'PageView');
+      fbq('track', 'Contact');
+      fbq('track', 'Book a Repair');
+
+    </script>
+
+    <!-- <noscript>
+      <img height="1" width="1"
+        src="https://www.facebook.com/tr?id=2472954843120090&ev=PageView&noscript=1"
+        style="display:none"
+      />
+    </noscript> -->
+ 
+
+    <script type="module" crossorigin src="/assets/index-ZJ0nIoq6.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CEyKpr9Z.css">
+  </head>
+
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

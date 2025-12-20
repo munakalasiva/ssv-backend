@@ -1,0 +1,23 @@
+{
+  "name": "SSV Electronics - TV Repair Services",
+  "short_name": "SSV Electronics",
+  "description": "Professional TV repair services in Visakhapatnam. Expert repairs for Samsung, LG, Sony, Mi and all brands with warranty.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#093f74",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/ssv-logo.png",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "utilities"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}
